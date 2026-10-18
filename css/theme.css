@@ -1,0 +1,74 @@
+/* ===== Theme toggle (light = default, dark = html[data-theme=dark]) ===== */
+.theme-btn{flex:none;width:40px;height:40px;display:grid;place-items:center;border:2px solid var(--blue);background:#fff;color:var(--orange);border-radius:50%;cursor:pointer;padding:0;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.theme-btn:hover{background:var(--blue);color:var(--yellow);transform:rotate(15deg)}
+.theme-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.theme-btn .i-moon{display:none}
+html[data-theme=dark] .theme-btn .i-sun{display:none}
+html[data-theme=dark] .theme-btn .i-moon{display:block}
+@media (max-width:359px){.theme-btn{width:34px;height:34px}.theme-btn svg{width:17px;height:17px}.nav-right{gap:4px}}
+html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{transition:background-color .3s,color .3s,border-color .3s,box-shadow .3s!important}
+@media (prefers-reduced-motion:reduce){html.theme-anim *{transition:none!important}}
+
+/* ===== Dark palette ===== */
+html[data-theme=dark]{
+  color-scheme:dark;
+  --blue:#1746A2;--orange:#FF8A35;
+  --soft:#222B3D;
+  --tint:linear-gradient(135deg,#141a2b 0%,#191F2E 50%,#1c2132 100%);
+  --grad-cool:linear-gradient(135deg,#1746A2,#2a62c9);
+  --grad-warm:linear-gradient(135deg,#FF8A35,#FFC247);
+  --d-bg:#101522;--d-surface:#191F2E;--d-surface2:#222B3D;
+  --d-text:#fff;--d-muted:#C5CCDA;--d-link:#8fb5ff;--d-line:#2d3850;
+}
+html[data-theme=dark] body{background:var(--d-bg);color:var(--d-text)}
+/* top bar + menu */
+html[data-theme=dark] .ticker{background:linear-gradient(90deg,#1746A2,#0f2f73)}
+html[data-theme=dark] .nav{background:var(--d-surface);box-shadow:0 2px 14px rgba(0,0,0,.45)}
+html[data-theme=dark] .nav-links{background:var(--d-surface);box-shadow:0 10px 20px rgba(0,0,0,.5)}
+html[data-theme=dark] .nav-links a{color:var(--d-link);border-bottom-color:var(--d-line)}
+html[data-theme=dark] .nav-links a:hover{color:var(--orange)}
+html[data-theme=dark] .brand-name{color:var(--d-text)}
+html[data-theme=dark] .lang-btn{background:var(--d-surface);color:var(--d-link);border-color:var(--d-link)}
+html[data-theme=dark] .lang-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+html[data-theme=dark] .theme-btn{background:var(--d-surface);border-color:var(--d-link);color:var(--yellow)}
+html[data-theme=dark] .theme-btn:hover{background:var(--blue);border-color:var(--blue)}
+html[data-theme=dark] .btn-wh{background:#fff;color:#1746A2}
+html[data-theme=dark] .btn-wh:hover{background:var(--yellow)}
+/* sections + headings */
+html[data-theme=dark] .section.alt{background:var(--tint)}
+html[data-theme=dark] .sec-title{background:linear-gradient(135deg,#9dbdff,#fff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+html[data-theme=dark] #programs::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath fill='%23FF8A35' d='M0 30C240 0 480 70 720 40S1200 0 1440 30V80H0z'/%3E%3Cpath fill='%23FFC247' d='M0 45C260 15 520 80 760 52S1200 18 1440 46V80H0z'/%3E%3Cpath fill='%23101522' d='M0 58C280 32 540 82 780 62S1220 38 1440 60V80H0z'/%3E%3C/svg%3E")}
+html[data-theme=dark] .about h3,html[data-theme=dark] .ct-card h3,html[data-theme=dark] .loc-card h3,html[data-theme=dark] .hours,html[data-theme=dark] .back,html[data-theme=dark] .details h2,html[data-theme=dark] .c-item small{color:var(--d-link)}
+html[data-theme=dark] .back:hover{color:var(--orange)}
+/* cards + contact */
+html[data-theme=dark] .card{box-shadow:0 6px 16px rgba(0,0,0,.45)}
+html[data-theme=dark] .card:hover{box-shadow:0 12px 24px rgba(255,138,53,.3)}
+html[data-theme=dark] .c-item,html[data-theme=dark] .ct-card,html[data-theme=dark] .loc-card,html[data-theme=dark] .hours{background:var(--d-surface);box-shadow:0 3px 12px rgba(0,0,0,.4)}
+html[data-theme=dark] .ct-card{border-color:var(--d-line);border-top-color:var(--a,var(--orange))}
+html[data-theme=dark] .ct-card:nth-child(4){--a:#2a62c9}
+html[data-theme=dark] .ct-card:hover{box-shadow:0 10px 22px rgba(0,0,0,.55)}
+html[data-theme=dark] .hours{border-color:var(--yellow)}
+html[data-theme=dark] .map-wrap{background:var(--d-surface2);box-shadow:0 6px 20px rgba(0,0,0,.45)}
+html[data-theme=dark] .about .logo-plate{border-color:var(--d-line)}
+html[data-theme=dark] .details{background:linear-gradient(135deg,#1c2a4d,#2a2230);border-top-color:var(--orange)}
+html[data-theme=dark] .details p{color:var(--d-muted)}
+/* footer */
+html[data-theme=dark] .footer{background:linear-gradient(135deg,#0c1a3d,#1746A2)}
+/* trips page: dropdowns, cards, modal */
+html[data-theme=dark] .jp-dd-btn{background:var(--d-surface);color:var(--d-link);box-shadow:0 8px 24px rgba(0,0,0,.5)}
+html[data-theme=dark] .jp-dd-ic{fill:var(--d-link)}
+html[data-theme=dark] .jp-dd-list{background:var(--d-surface);border-color:var(--d-line);box-shadow:0 14px 34px rgba(0,0,0,.6)}
+html[data-theme=dark] .jp-dd-list li{color:var(--d-text)}
+html[data-theme=dark] .jp-dd-list li:hover,html[data-theme=dark] .jp-dd-list li.is-active{background:var(--d-surface2);color:var(--orange)}
+html[data-theme=dark] .jp-dd-list li[aria-selected=true]{background:var(--grad-cool);color:#fff}
+html[data-theme=dark] .trip{background:var(--d-surface);border-color:var(--d-line);border-bottom-color:var(--orange);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+html[data-theme=dark] .trip:nth-child(even){border-bottom-color:var(--yellow)}
+html[data-theme=dark] .trip:hover{box-shadow:0 12px 26px rgba(255,138,53,.28)}
+html[data-theme=dark] .trip-title{color:var(--d-text)}
+html[data-theme=dark] .trip-price{color:var(--d-muted)}
+html[data-theme=dark] .trip-btn:hover{color:#12233f}
+html[data-theme=dark] .jp-empty{background:linear-gradient(135deg,#1c2a4d,#2a2230);color:var(--d-link)}
+html[data-theme=dark] .jp-modal{background:var(--d-surface);color:var(--d-text);box-shadow:0 24px 60px rgba(0,0,0,.7)}
+html[data-theme=dark] .jp-modal::backdrop{background:rgba(5,8,16,.78)}
+html[data-theme=dark] .jp-m-sec h3{color:var(--d-link)}
+html[data-theme=dark] .jp-m-content{background:var(--d-surface2);border-color:#3a4766;color:var(--d-muted)}
