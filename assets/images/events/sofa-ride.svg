@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0061D1"/><stop offset="1" stop-color="#8fd0ff"/></linearGradient>
+<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0061D1"/><stop offset="1" stop-color="#003A8C"/></linearGradient>
+</defs>
+<rect width="800" height="338" fill="url(#sky)"/>
+<rect y="336" width="800" height="264" fill="url(#sea)"/>
+<circle cx="650" cy="106" r="52" fill="#FFC247"/>
+<path d="M0 366 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 L800 566 L0 566 Z" fill="#ffffff" opacity="0.18"/>
+<path d="M0 456 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 L800 656 L0 656 Z" fill="#ffffff" opacity="0.12"/>
+<ellipse cx="400" cy="432" rx="200" ry="26" fill="none" stroke="#FF7300" stroke-width="14"/><circle cx="400" cy="220" r="22" fill="#12233f"/><rect x="270" y="250" width="260" height="80" rx="22" fill="#FF7300"/><rect x="240" y="310" width="320" height="70" rx="22" fill="#FFC247"/><rect x="222" y="300" width="40" height="90" rx="18" fill="#FF7300"/><rect x="538" y="300" width="40" height="90" rx="18" fill="#FF7300"/><rect x="305" y="325" width="85" height="40" rx="12" fill="#ffffff" opacity="0.35"/><rect x="410" y="325" width="85" height="40" rx="12" fill="#ffffff" opacity="0.35"/>
+</svg>

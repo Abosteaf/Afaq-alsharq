@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0061D1"/><stop offset="1" stop-color="#8fd0ff"/></linearGradient>
+<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0061D1"/><stop offset="1" stop-color="#003A8C"/></linearGradient>
+</defs>
+<rect width="800" height="338" fill="url(#sky)"/>
+<rect y="336" width="800" height="264" fill="url(#sea)"/>
+<circle cx="650" cy="106" r="52" fill="#FFC247"/>
+<path d="M0 366 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 q 27.5 -10 55.0 0 q 27.5 10 55.0 0 L800 566 L0 566 Z" fill="#ffffff" opacity="0.18"/>
+<path d="M0 456 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 q 35.0 -12 70.0 0 q 35.0 12 70.0 0 L800 656 L0 656 Z" fill="#ffffff" opacity="0.12"/>
+<rect x="240" y="340" width="320" height="90" rx="45" fill="#FFC247"/><path d="M240 370 L212 352 L212 418 L240 400 Z" fill="#FF7300"/><rect x="355" y="290" width="90" height="60" rx="14" fill="#FF7300"/><rect x="385" y="235" width="7" height="60" fill="#ffffff"/><rect x="385" y="235" width="24" height="7" fill="#ffffff"/><circle cx="290" cy="385" r="11" fill="#003A8C"/><circle cx="335" cy="385" r="11" fill="#003A8C"/><circle cx="380" cy="385" r="11" fill="#003A8C"/><circle cx="425" cy="385" r="11" fill="#003A8C"/><circle cx="470" cy="385" r="11" fill="#003A8C"/><circle cx="515" cy="385" r="11" fill="#003A8C"/>
+</svg>
