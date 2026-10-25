@@ -1,0 +1,62 @@
+/* فعاليات العقبة البحرية — homepage card + popup. Self-contained (prefix ev-). */
+
+/* the homepage card is a div[role=button] so it can open the popup without navigating */
+.card[role=button]{cursor:pointer}
+
+/* lock background scroll while the popup is open */
+html.ev-lock{overflow:hidden}
+
+/* popup */
+.ev-modal{border:0;padding:0;margin:auto;width:min(900px,calc(100% - 24px));max-height:calc(100dvh - 24px);border-radius:18px;overflow:auto;overscroll-behavior:contain;background:#fff;color:var(--ink);box-shadow:0 24px 60px rgba(0,20,70,.5)}
+.ev-modal::backdrop{background:rgba(0,25,70,.65);backdrop-filter:blur(2px)}
+.ev-modal[open]{animation:ev-in .25s ease;display:block}
+.ev-modal[open]::backdrop{animation:ev-bd .25s ease}
+@keyframes ev-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes ev-bd{from{opacity:0}to{opacity:1}}
+
+.ev-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--grad-cool);color:#fff;border-bottom:5px solid var(--orange)}
+.ev-head h2{flex:1;min-width:0;font-size:1.2rem;line-height:1.4;overflow-wrap:anywhere}
+.ev-close{flex:none;width:44px;height:44px;border:2px solid rgba(255,255,255,.7);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.2s;font-family:inherit}
+.ev-close:hover{background:var(--orange);border-color:var(--orange)}
+
+.ev-wrap{padding:16px}
+.ev-grid{list-style:none;display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:540px){.ev-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:860px){.ev-grid{grid-template-columns:repeat(3,1fr)}}
+
+.ev-item{background:#fff;border:1px solid #e1e9f6;border-top:4px solid var(--orange);border-radius:var(--r);overflow:hidden;box-shadow:0 3px 12px rgba(0,58,140,.1);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.ev-item:nth-child(even){border-top-color:var(--yellow)}
+@media (hover:hover){.ev-item:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(255,115,0,.22)}}
+.ev-media{aspect-ratio:1/1;background:var(--soft);overflow:hidden}
+.ev-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.ev-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.ev-name{color:var(--blue);font-size:1.02rem;line-height:1.4}
+.ev-name-en{font-size:.82rem;color:var(--blue2);font-weight:700;margin-top:-4px}
+.ev-prices{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.ev-price{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--grad-warm);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.92rem;flex-wrap:wrap}
+.ev-price-label{font-size:.78rem;opacity:.85}
+.ev-price-val{font-family:Montserrat,Cairo,sans-serif;font-size:.95rem}
+.ev-diff{font-size:.8rem;color:var(--blue2);font-weight:700}
+.ev-note{font-size:.84rem;background:var(--soft);border-inline-start:4px solid var(--blue2);padding:6px 10px;border-radius:8px;line-height:1.55}
+
+@media (max-width:359px){.ev-head h2{font-size:1.05rem}.ev-wrap{padding:12px}}
+@media (prefers-reduced-motion:reduce){.ev-modal[open],.ev-modal[open]::backdrop,.ev-item{animation:none!important;transition:none!important}}
+
+/* dark theme */
+html[data-theme=dark] .ev-modal{background:var(--d-surface);color:var(--d-text);box-shadow:0 24px 60px rgba(0,0,0,.7)}
+html[data-theme=dark] .ev-modal::backdrop{background:rgba(5,8,16,.78)}
+html[data-theme=dark] .ev-item{background:var(--d-surface2);border-color:var(--d-line);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+html[data-theme=dark] .ev-name{color:var(--d-link)}
+html[data-theme=dark] .ev-name-en,html[data-theme=dark] .ev-diff{color:var(--d-link)}
+html[data-theme=dark] .ev-media{background:var(--d-surface)}
+html[data-theme=dark] .ev-note{background:var(--d-surface);color:var(--d-muted)}
+
+/* homepage card banner (wide 2.67:1 artwork inside the 16:10 card): show it whole on white, no cropping */
+#ev-open{background:#fff}
+/* the artwork already carries the title, so the image fills the whole card (custom 16:10 crop,
+   title kept centred) and the duplicate caption is visually hidden but still read by screen readers */
+#ev-open{background:#e9f0fb}
+#ev-open img{object-fit:cover;object-position:50% 50%}
+#ev-open::after{display:none}
+#ev-open h3{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;inset:auto}
+#ev-open h3::before{display:none}

@@ -1,0 +1,203 @@
+/* ==========================================================================
+   AFAQ — motion layer (planes, ship, bus, banner clouds, reveal, hover effects)
+   Everything here is decorative. All animations live inside
+   prefers-reduced-motion:no-preference. Decor layers are injected by
+   js/motion.js, are aria-hidden and have pointer-events:none.
+   Uses only transform / opacity for animation.
+   ========================================================================== */
+
+/* ---------- always-on (static) rules ---------- */
+.fx-layer{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;direction:ltr}
+.fx-layer *{pointer-events:none}
+.fx-layer svg{display:block}
+.fx-paused,.fx-paused *{animation-play-state:paused!important}
+.fx-plane svg{width:100%;height:100%;fill:#fff;filter:drop-shadow(0 3px 5px rgba(0,30,90,.35))}
+.fx-cloud svg{width:100%;height:100%;fill:#fff}
+.fx-ship svg,.fx-bus svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 3px 5px rgba(0,30,90,.4))}
+
+@media (prefers-reduced-motion:no-preference){
+
+/* light artwork banners: tint the decor so it stays visible on white */
+.fx-dark .fx-plane svg{fill:var(--orange);filter:drop-shadow(0 2px 4px rgba(0,58,140,.35))}
+.fx-dark .fx-cloud svg{fill:#9fc3f5}
+.fx-dark .fx-cloud{opacity:.5}
+.fx-dark .fx-trail{background:repeating-linear-gradient(90deg,rgba(0,97,209,.85) 0 9px,transparent 9px 18px)!important}
+/* ---------- hero / banner sky ---------- */
+.fx-cloud{position:absolute;left:0;will-change:transform;opacity:.55;animation:fx-drift var(--t,80s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes fx-drift{from{transform:translate3d(-320px,0,0)}to{transform:translate3d(calc(100vw + 120px),0,0)}}
+
+.fx-plane-wrap{position:absolute;left:0;top:var(--y,12%);width:0;height:0;will-change:transform;animation:fx-fly var(--t,26s) linear infinite;animation-delay:var(--dl,0s)}
+.fx-plane-wrap.rev{animation-name:fx-fly-rev}
+/* crosses the screen in the first ~48% of the cycle, then rests off-screen */
+@keyframes fx-fly{0%{transform:translate3d(-300px,0,0)}48%,100%{transform:translate3d(calc(100vw + 60px),0,0)}}
+@keyframes fx-fly-rev{0%{transform:translate3d(calc(100vw + 300px),0,0)}48%,100%{transform:translate3d(-60px,0,0)}}
+.fx-plane{position:absolute;right:0;top:0;width:var(--s,46px);height:var(--s,46px);margin-top:calc(var(--s,46px)/-2);animation:fx-bob 4.2s ease-in-out infinite alternate}
+.fx-plane svg{transform:rotate(90deg)}
+.fx-plane-wrap.rev .fx-plane{left:0;right:auto}
+.fx-plane-wrap.rev .fx-plane svg{transform:rotate(-90deg)}
+@keyframes fx-bob{from{transform:translateY(-6px) rotate(-1.5deg)}to{transform:translateY(6px) rotate(1.5deg)}}
+/* dashed contrail behind the plane */
+.fx-trail{position:absolute;right:calc(var(--s,46px)*.85);top:0;width:var(--tl,170px);height:3px;margin-top:-1.5px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 9px,transparent 9px 18px);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000);
+  transform:translateX(0);animation:fx-bob 4.2s ease-in-out infinite alternate}
+.fx-plane-wrap.rev .fx-trail{right:auto;left:calc(var(--s,46px)*.85);-webkit-mask-image:linear-gradient(270deg,transparent,#000);mask-image:linear-gradient(270deg,transparent,#000)}
+
+/* ---------- home hero: cruise ship (sea) + tour bus (road) ----------
+   different direction, speed and rest time from the planes so nothing moves in sync */
+.fx-ship-wrap{position:absolute;left:0;bottom:var(--sb,26px);width:var(--sw,150px);aspect-ratio:220/96;will-change:transform;
+  animation:fx-sail 78s linear infinite;animation-delay:-16s}
+.fx-ship{position:absolute;inset:0;transform-origin:50% 90%;animation:fx-rock 5.5s ease-in-out infinite alternate}
+.fx-smoke circle{fill:#fff;opacity:0;transform-box:fill-box;transform-origin:center;animation:fx-puff 4.5s ease-out infinite}
+.fx-smoke circle:nth-child(2){animation-delay:1.5s}.fx-smoke circle:nth-child(3){animation-delay:3s}
+.fx-sea{position:absolute;left:-14%;right:-14%;bottom:-8%;height:24%;animation:fx-swell 3.2s ease-in-out infinite alternate;-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}
+.fx-sea svg{width:100%;height:100%;fill:rgba(255,255,255,.7);filter:none}
+@keyframes fx-sail{0%{transform:translate3d(calc(var(--sw,150px)*-1.3),0,0)}72%,100%{transform:translate3d(calc(100vw + 40px),0,0)}}
+@keyframes fx-rock{from{transform:translateY(-1.5px) rotate(-.7deg)}to{transform:translateY(1.5px) rotate(.7deg)}}
+@keyframes fx-swell{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+@keyframes fx-puff{0%{opacity:0;transform:translate(0,0) scale(.5)}15%{opacity:.7}100%{opacity:0;transform:translate(-26px,-22px) scale(2.6)}}
+
+.fx-lane{position:absolute;left:0;right:0;top:var(--rt,58px);height:0}
+.fx-road{position:absolute;left:0;right:0;top:0;height:2px;border-radius:2px;opacity:.55;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 12px,transparent 12px 24px);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.fx-bus-wrap{position:absolute;left:0;bottom:-3px;width:var(--bw,112px);aspect-ratio:180/76;will-change:transform;
+  animation:fx-drive 46s linear infinite;animation-delay:-9s}
+.fx-bus{position:absolute;inset:0;transform:scaleX(-1);animation:fx-bump .55s ease-in-out infinite alternate}
+.fx-wheel{transform-box:fill-box;transform-origin:center;animation:fx-spin .8s linear infinite}
+@keyframes fx-drive{0%{transform:translate3d(calc(100vw + 40px),0,0)}62%,100%{transform:translate3d(calc(var(--bw,112px)*-1.3),0,0)}}
+@keyframes fx-bump{from{transform:scaleX(-1) translateY(0)}to{transform:scaleX(-1) translateY(-1.4px)}}
+@keyframes fx-spin{to{transform:rotate(-360deg)}}
+
+/* soft sun glow (nature pages) */
+.fx-sun{position:absolute;top:-12%;inset-inline-end:-6%;width:46%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,212,59,.5),rgba(255,138,53,.16) 45%,transparent 70%);animation:fx-glow 7s ease-in-out infinite alternate}
+@keyframes fx-glow{from{transform:scale(.92);opacity:.65}to{transform:scale(1.08);opacity:1}}
+
+/* slow depth effect on photos (very small, never harms text legibility) */
+.slide{transition:opacity 1s ease,transform 6s linear;transform:scale(1)}
+.slide.active{transform:scale(1.06)}
+.jp-hero-bg img,.page-hero>img{animation:fx-kb 32s ease-in-out infinite alternate;will-change:transform}
+body[data-titlekey=c5] .jp-hero-bg img{animation-duration:48s}
+@keyframes fx-kb{from{transform:scale(1)}to{transform:scale(1.07)}}
+
+/* hero content entrance (pure CSS so nothing depends on JS) */
+.hero-content>.logo-plate{animation:fx-pop .8s cubic-bezier(.2,.8,.2,1) backwards}
+.hero-content>h1{animation:fx-up .8s .12s cubic-bezier(.2,.7,.2,1) backwards}
+.hero-content>p{animation:fx-up .8s .22s cubic-bezier(.2,.7,.2,1) backwards}
+.hero-content>.btns{animation:fx-up .8s .34s cubic-bezier(.2,.7,.2,1) backwards}
+.jp-hero-in>h1{animation:fx-up .8s cubic-bezier(.2,.7,.2,1) backwards}
+.jp-hero-in>.jp-filters{animation:fx-up .8s .15s cubic-bezier(.2,.7,.2,1) backwards}
+.page-hero h1{animation:fx-up .8s .1s cubic-bezier(.2,.7,.2,1) backwards}
+@keyframes fx-up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes fx-pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.logo-plate{transition:transform .3s}
+.hero .logo-plate:hover{transform:rotate(-3deg) scale(1.04)}
+
+/* ---------- scroll reveal (classes added by motion.js) ---------- */
+.fx-reveal.fx-reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease var(--d,0ms),transform .7s cubic-bezier(.2,.7,.2,1) var(--d,0ms)}
+.fx-reveal.fx-reveal.fx-zoom{transform:scale(.9)}
+.fx-reveal.fx-reveal.in{opacity:1;transform:none}
+.sec-title.fx-reveal::after{width:0;transition:width .8s cubic-bezier(.2,.7,.2,1) .35s}
+.sec-title.fx-reveal.in::after{width:90px}
+
+/* ---------- section route divider (between programs and about) ---------- */
+.fx-route{position:relative;height:84px;margin-top:6px;overflow:hidden;pointer-events:none;direction:ltr}
+.fx-route svg{position:absolute;inset:0;width:100%;height:100%}
+.fx-route .rt-line{fill:none;stroke:var(--blue2);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:3 11;opacity:.55;animation:fx-dash 2.4s linear infinite}
+.fx-route .rt-plane{fill:var(--orange)}
+.fx-route .rt-dot{fill:var(--blue2)}
+@keyframes fx-dash{to{stroke-dashoffset:-28}}
+html[data-theme=dark] .fx-route .rt-line{stroke:var(--yellow);opacity:.45}
+html[data-theme=dark] .fx-route .rt-dot{fill:var(--yellow)}
+
+/* ---------- floating travel icons in the About section ---------- */
+#about{position:relative;overflow:hidden}
+#about>.container{position:relative;z-index:1}
+.fx-icon{position:absolute;z-index:0;color:var(--blue2);opacity:.13;pointer-events:none;width:var(--s,64px);height:var(--s,64px);animation:fx-float var(--t,7s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
+.fx-icon svg{width:100%;height:100%;fill:currentColor}
+.fx-icon.o{color:var(--orange)}
+@keyframes fx-float{from{transform:translateY(-8px) rotate(-4deg)}to{transform:translateY(10px) rotate(4deg)}}
+html[data-theme=dark] .fx-icon{color:#8fb5ff;opacity:.16}
+html[data-theme=dark] .fx-icon.o{color:var(--orange)}
+
+/* ---------- home cards ---------- */
+.card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.card::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%)}
+@media (hover:hover){.card:hover::before{transform:translateX(120%);transition:transform .8s ease}}
+.card h3{transition:transform .3s}
+.card:hover h3{transform:translateY(-3px)}
+.card-fx{position:absolute;z-index:1;pointer-events:none;inset:0;overflow:hidden;direction:ltr}
+/* mini plane crossing the top of a card */
+.cf-plane{position:absolute;top:14%;left:0;width:26px;height:26px;animation:cf-fly 9s linear infinite;animation-delay:var(--dl,0s)}
+.cf-plane svg{width:100%;height:100%;fill:#fff;transform:rotate(90deg);filter:drop-shadow(0 2px 3px rgba(0,30,90,.4))}
+.cf-plane::before{content:"";position:absolute;right:20px;top:50%;width:46px;height:2px;margin-top:-1px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 6px,transparent 6px 12px);-webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000)}
+@keyframes cf-fly{0%{transform:translate3d(-90px,0,0)}45%,100%{transform:translate3d(calc(100cqw + 40px),0,0)}}
+.card.has-fx{container-type:inline-size}
+/* bobbing map pin (domestic trips) */
+.cf-pin{position:absolute;top:10%;inset-inline-end:10%;width:24px;height:24px;color:var(--yellow);animation:cf-pin 2.6s ease-in-out infinite}
+.cf-pin svg{width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+@keyframes cf-pin{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* gentle sun (Jordan is our paradise) */
+.cf-sun{position:absolute;top:-30%;inset-inline-end:-12%;width:55%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,212,59,.55),rgba(255,138,53,.15) 50%,transparent 70%);animation:fx-glow 6s ease-in-out infinite alternate}
+/* waves (Aqaba marine events) */
+.cf-wave{position:absolute;left:0;bottom:0;width:200%;height:30%;display:flex;animation:cf-wave var(--t,9s) linear infinite}
+.cf-wave svg{flex:none;width:50%;height:100%;fill:rgba(255,255,255,.22)}
+.cf-wave.b{height:22%;--t:6s;animation-direction:reverse;opacity:.9}
+.cf-wave.b svg{fill:rgba(255,212,59,.28)}
+@keyframes cf-wave{to{transform:translate3d(-50%,0,0)}}
+
+/* events popup header waves */
+.ev-head{position:sticky;overflow:hidden}
+.ev-head>:not(.cf-wave){position:relative;z-index:1}
+.ev-head .cf-wave{z-index:0;height:46%;opacity:.7}
+.ev-head .cf-wave.b{height:30%}
+
+/* ---------- trip cards / dropdown polish ---------- */
+.jp-grid.jp-fade>.trip{animation:jp-in .5s cubic-bezier(.2,.7,.2,1) backwards}
+.jp-grid.jp-fade>.trip:nth-child(2){animation-delay:.05s}.jp-grid.jp-fade>.trip:nth-child(3){animation-delay:.1s}
+.jp-grid.jp-fade>.trip:nth-child(4){animation-delay:.15s}.jp-grid.jp-fade>.trip:nth-child(5){animation-delay:.2s}
+.jp-grid.jp-fade>.trip:nth-child(6){animation-delay:.25s}.jp-grid.jp-fade>.trip:nth-child(7){animation-delay:.3s}
+.jp-grid.jp-fade>.trip:nth-child(8){animation-delay:.35s}.jp-grid.jp-fade>.trip:nth-child(n+9){animation-delay:.4s}
+.trip{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.trip-img img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+/* NB: never transform .trip-btn — its ::after is the whole-card click target */
+.trip-btn{transition:background .25s,color .25s,box-shadow .25s}
+.trip-btn:hover{box-shadow:0 6px 14px rgba(255,115,0,.4)}
+
+/* ---------- buttons ---------- */
+.btn{position:relative;overflow:hidden;transition:transform .2s,box-shadow .25s,background .2s}
+.btn::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-130%)}
+@media (hover:hover){.btn:hover::before{transform:translateX(130%);transition:transform .7s ease}
+ .btn:hover{box-shadow:0 8px 18px rgba(0,58,140,.28);transform:translateY(-2px)}}
+.btn:active{transform:translateY(0) scale(.96);box-shadow:none}
+.lang-btn,.jp-reset{transition:background .2s,color .2s,transform .15s}
+.lang-btn:active,.jp-reset:active{transform:scale(.94)}
+.fx-ripple{position:absolute;border-radius:50%;pointer-events:none;background:rgba(255,255,255,.55);transform:scale(0);animation:fx-rip .6s ease-out forwards}
+@keyframes fx-rip{to{transform:scale(1);opacity:0}}
+
+/* ---------- contact / location ---------- */
+.ct-card .c-ico{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.ct-card:hover .c-ico{transform:rotate(-10deg) scale(1.1)}
+.loc-card .c-ico{animation:cf-pin 2.8s ease-in-out infinite}
+.footer a.fl .ic{transition:transform .25s}
+.footer a.fl:hover .ic{transform:scale(1.2)}
+.nav-links a{transition:color .2s,background .2s}
+
+/* ticker: keep the existing marquee, just let people pause it */
+@media (hover:hover){.ticker:hover .ticker-track{animation-play-state:paused}}
+
+} /* end no-preference */
+
+/* ---------- small screens: calmer, lighter ---------- */
+@media (max-width:600px){
+  .fx-plane{--s:34px}
+  .fx-trail{--tl:110px}
+  .fx-plane-wrap.p3{display:none}
+  .fx-route{height:64px}
+  .fx-icon{--s:46px}
+}
+.fx-ship-wrap{--sw:190px;--sb:34px}.fx-lane{--rt:58px;--bw:112px}
+@media (max-width:1023px){.fx-ship-wrap{--sw:160px}.fx-lane{--bw:96px}}
+@media (max-width:600px){.fx-ship-wrap{--sw:122px;--sb:27px}.fx-lane{--rt:44px;--bw:74px}}
+@media print{.fx-layer,.fx-route,.fx-icon,.card-fx{display:none!important}}
